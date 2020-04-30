@@ -1,0 +1,99 @@
+conda create -n tf-gpu tensorflow-gpu
+conda activate tf-gpu
+pip install gym
+pip install -U ray
+conda install -c anaconda pandas
+pip install ray[rllib]
+
+conda activate tf-gpu
+python run_neurocuts.py --rules=acl1_10k,fw1_10k,ipc1_10k --partition-mode=efficuts  --dump-dir=/tmp/trees --num-workers=7 --gpu
+
+python run_neurocuts.py --rules=acl1_100k,acl1_10k,acl1_1k,acl2_100k,acl2_10k,acl2_1k,acl3_100k,acl3_10k,acl3_1k,acl4_100k,acl4_10k,acl4_1k,acl5_100k,acl5_10k,acl5_1k,fw1_100k,fw1_10k,fw1_1k,fw2_100k,fw2_10k,fw2_1k,fw3_100k,fw3_10k,fw3_1k,fw4_100k,fw4_10k,fw4_1k,fw5_100k,fw5_10k,fw5_1k,ipc1_100k,ipc1_10k,ipc1_1k,ipc2_100k,ipc2_10k,ipc2_1k --partition-mode=efficuts  --dump-dir=/tmp/trees --num-workers=7 --gpu
+
+
+
+
+
+Configuraçao do Jupyter
+Como Configurar o Jupyter Notebook com Python 3 no Ubuntu 18.04
+PostedJanuary 25, 2019 16.2kviews PYTHONDEVELOPMENTDATA ANALYSISUBUNTU 18.04
+
+By Lisa Tagliaferri
+
+Become an author
+
+Introdução
+O Jupyter Notebook é uma aplicação web open-source que lhe permite criar e compartilhar código interativo, visualizações e muito mais. Esta ferramenta pode ser usada com várias linguagens de programação, incluindo Python, Julia, R, Haskell e Ruby. Ele é frequentemente usado para trabalhar com dados, modelagem estatística e aprendizado de máquina.
+
+Este tutorial irá orientá-lo na configuração do Jupyter Notebook para ser executado em um servidor Ubuntu 18.04, além de ensinar como se conectar e usar o notebook. Jupyter Notebooks (ou simplesmente Notebooks) são documentos produzidos pelo aplicativo Jupyter Notebook, que contém tanto código de computador quanto elementos de rich text (parágrafos, equações, figuras, links, etc.) que ajudam a apresentar e compartilhar pesquisas reproduzíveis.
+
+Ao final deste guia, você será capaz de executar código Python 3 usando o Jupyter Notebook em execução em um servidor remoto.
+
+Pré-requisitos
+Para completar este guia, você deve ter uma nova instância de servidor Ubuntu 18.04, configurado com um firewall básico e um usuário não-root com privilégios sudo. Você pode aprender como configurar isso através de nosso tutorial de configuração inicial de servidor.
+
+Passo 1 — Configurar o Python
+Para começar o processo, vamos instalar as dependências que precisamos para o nosso ambiente de programação Python a partir dos repositórios do Ubuntu. O Ubuntu 18.04 vem pré-instalado com o Python 3.6. Vamos utilizar o gerenciador de pacotes Python, pip, para instalar componentes adicionais um pouco mais tarde.
+
+Primeiro precisamos atualizar o índice local de pacotes do apt e depois baixar e instalar os pacotes:
+
+sudo apt update
+Em seguida, instale o pip e os arquivos de cabeçalho do Python, que são utilizados por algumas das dependências do Jupyter:
+
+sudo apt install python3-pip python3-dev
+Podemos passar agora a configurar um ambiente virtual Python no qual instalaremos o Jupyter.
+
+Passo 2 — Criar um Ambiente Virtual do Python para o Jupyter
+Agora que temos o Python 3, seus arquivos de cabeçalho e o pip pronto para usar, podemos criar um ambiente virtual Python para gerenciar nossos projetos. Vamos instalar o Jupyter neste ambiente virtual.
+
+Para fazer isso, primeiro precisamos acessar o comando virtualenv, que podemos instalar com o pip.
+
+Atualize o pip e instale o pacote digitando:
+
+sudo -H pip3 install --upgrade pip
+sudo -H pip3 install virtualenv
+A flag -H garante que a política de segurança configure a variável de ambiente home para o diretório home do usuário de destino.
+
+Com o virtualenv instalado, podemos começar a formar nosso ambiente. Crie e mova-se para um diretório onde possamos manter nossos arquivos de projeto. Chamaremos o nosso de meu_projeto, mas você pode usar um nome que seja significativo para você e no qual você esteja trabalhando.
+
+mkdir ~/meu_projeto
+cd ~/meu_projeto
+Dentro do diretório do projeto, criaremos um ambiente virtual do Python. Para o propósito deste tutorial, vamos chamá-lo de meu_projeto_env, mas você pode chamá-lo de algo que seja relevante para o seu projeto.
+
+virtualenv meu_projeto_env
+Isso irá criar um diretório chamado meu_projeto_env dentro do diretório meu_projeto. Dentro, ele instalará uma versão local do Python e uma versão local do pip. Podemos usar isso para instalar e configurar um ambiente Python isolado para o Jupyter.
+
+Antes de instalarmos o Jupyter, precisamos ativar o ambiente virtual. Você pode fazer isso digitando:
+
+source meu_projeto_env/bin/activate
+Seu prompt deve mudar para indicar que você agora está operando dentro de um ambiente virtual do Python. Vai parecer algo assim: (meu_projeto_env)usuário@host:~/meu_projeto$.
+
+Agora você está pronto para instalar o Jupyter nesse ambiente virtual.
+
+Passo 3 — Instalar o Jupyter
+Com o seu ambiente virtual ativo, instale o Jupyter com a instância local do pip.
+
+Nota: Quando o ambiente virtual está ativado (quando o seu prompt tem (meu_projeto_env) precedendo-o), usepip em vez de pip3, mesmo se você estiver usando o Python 3. A cópia do ambiente virtual da ferramenta é sempre denominada pip, independentemente da versão do Python.
+
+pip install jupyter
+Neste ponto, você instalou com sucesso todo o software necessário para executar o Jupyter. Agora podemos iniciar o servidor do Notebook.
+
+Passo 4 — Executar o Jupyter Notebook
+Agora você tem tudo o que precisa para rodar o Jupyter Notebook! Para executá-lo, execute o seguinte comando:
+
+jupyter notebook
+
+sudo python3 -m pip install numpy
+sudo python3 -m pip show numpy
+
+pip install numpy
+pip install matplotlib
+pip install tensorflow
+pip install tensorflow-gpu
+pip install gym
+pip install -U ray
+pip install ray[rllib]
+pip install tensorflow-gpu==2.0
+
+
+ 
