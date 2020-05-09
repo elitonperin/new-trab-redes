@@ -26,7 +26,7 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument("--rules",
     type=lambda expr: [
-        os.path.abspath("classbench/{}".format(r)) for r in expr.split(",")],
+        os.path.abspath("neurocuts-master/classbench/{}".format(r)) for r in expr.split(",")],
     default="acl5_1k",
     help="Rules file name or list of rules files separated by comma.")
 
@@ -145,6 +145,9 @@ if __name__ == "__main__":
             "stop": {
                 "timesteps_total": 100000 if args.fast else 10000000,
             },
+            #Gravar o checkpoint no final - nao estava gravando os checkpoint
+           "checkpoint_at_end": True,
+           "checkpoint_freq": 10,
             "config": {
                 "log_level": "WARN",
                 "num_gpus": 0.2 if args.gpu else 0,
