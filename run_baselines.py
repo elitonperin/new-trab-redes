@@ -13,14 +13,14 @@ fw_seed_files = []
 ipc_seed_files = []
 
 for i in range(1, 6):
-    seed_files.append("acl%d_seed" % i)
-    acl_seed_files.append("acl%d_seed" % i)
+    seed_files.append("acl%d" % i)
+    acl_seed_files.append("acl%d" % i)
 for i in range(1, 6):
-    seed_files.append("fw%d_seed" % i)
-    fw_seed_files.append("fw%d_seed" % i)
+    seed_files.append("fw%d" % i)
+    fw_seed_files.append("fw%d" % i)
 for i in range(1, 3):
-    seed_files.append("ipc%d_seed" % i)
-    ipc_seed_files.append("ipc%d_seed" % i)
+    seed_files.append("ipc%d" % i)
+    ipc_seed_files.append("ipc%d" % i)
 
 
 def exe_cmd(cmd):
@@ -77,14 +77,14 @@ def run_cutsplit():
 
 def run_all():
     # seed_files = ["ipc2_seed"]
-    j_list = [1000, 10000, 100000]
-    k_list = ["HyperCuts"]
+    j_list = ["1k", "10k", "100k"]
+    k_list = ["HiCuts", "HyperCuts", "EffiCuts", "CutSplit"]
     for i in seed_files:
         for j in j_list:
             # for j in [1000, 10000, 100000]:
-            print("%s Rules %s_%d" % (datetime.datetime.now(), i, j))
+            print("%s Rules %s_%s" % (datetime.datetime.now(), i, j))
             for k in k_list:  #, "CutSplit"]:
-                rules = load_rules_from_file("classbench/%s_%d" % (i, j))
+                rules = load_rules_from_file("neurocuts-master/classbench/%s_%s" % (i, j))
                 cuts = None
                 if k == "HiCuts":
                     cuts = HiCuts(rules)
@@ -212,13 +212,14 @@ def gen_result(file_name):
     rules = ""
     algorithm = ""
     oneline = fin.readline()
+    #print(oneline)
     while oneline != "":
         items = oneline.strip().split()
         if len(items) == 4 and items[2] == "Rules":
             rules = items[3]
         elif len(items) == 4 and items[2] == "Algorithm":
             algorithm = items[3]
-        elif len(items) == 5 and items[2] == "Result":
+        elif len(items) == 6 and items[2] == "Result":
             print("%s %s %s %s" % (rules, algorithm, items[3], items[4]))
         oneline = fin.readline()
     fin.close()
@@ -246,8 +247,8 @@ if __name__ == "__main__":
     elif sys.argv[1] == "run_file":
         run_file(sys.argv[2], sys.argv[3])
     elif sys.argv[1] == "expr":
-        #        run_all()
-        run_hicuts()
+        run_all()
+        #run_hicuts()
         #run_hypercuts()
         #run_efficuts()
         #run_cutsplit()

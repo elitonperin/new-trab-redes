@@ -58,7 +58,7 @@ class HiCuts(object):
     def train(self):
         #comeca a contar o tempo
         start = time.time() 
-        print("Inicio:", start)
+        #print("Inicio:", start)
         print(datetime.datetime.now(), "Algorithm HiCuts")
         tree = self.build_tree()
 
@@ -66,13 +66,13 @@ class HiCuts(object):
          
         #Adicionei a partir daqui
         end = time.time()
-        print("Fim:", end)
-        print('tempo de execução:', end - start)
+        #print("Fim:", end)
+        #print('tempo de execução:', end - start)
         result["bytes_per_rule"] = result["bytes_per_rule"] / len(tree.rules)
-        print("------mem_result-----")
-        print("%s Result %d %d %d" %
+        #print("------mem_result-----")
+        print("%s Result %d %d %d %f" %
               (datetime.datetime.now(), result["memory_access"],
-               round(result["bytes_per_rule"]), result["num_node"]))
+               round(result["bytes_per_rule"]), result["num_node"], end - start))
         # print("------traverse_result-----")
         # result = tree.compute_result()
         # print("%s Result %d %d %d" %
@@ -100,15 +100,15 @@ class HiCuts(object):
 
             cut_dimension, cut_num = self.select_action(tree, node)
             if cut_num <= 1 and print_count < 100:
-                print("hicuts cut_num <=1, node rules number:",
-                      len(node.rules))
+                #print("hicuts cut_num <=1, node rules number:",
+                #     len(node.rules))
                 print_count += 1
             tree.cut_current_node(cut_dimension, cut_num)
             node = tree.get_current_node()
             count += 1
-            if count % 10000 == 0:
-                print(datetime.datetime.now(), "Depth:", tree.get_depth(),
-                      "Remaining nodes:", len(tree.nodes_to_cut))
+            #if count % 10000 == 0:
+             #   print(datetime.datetime.now(), "Depth:", tree.get_depth(),
+              #        "Remaining nodes:", len(tree.nodes_to_cut))
         return tree
 
     def get_depth(self):

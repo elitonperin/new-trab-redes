@@ -1,5 +1,7 @@
 import math, sys
 import datetime
+#usado para calcular o tempo de execucao de cada epoca
+import time
 
 from tree import *
 
@@ -59,7 +61,7 @@ class CutSplit(object):
                 update_bins(rule, src_bins, dst_bins, bin_size)
             else:
                 rule_subsets[3].append(rule)
-        print(datetime.datetime.now(), "primary separate completed")
+        #print(datetime.datetime.now(), "primary separate completed")
 
         # add subset 0 to other subsets if it is too small
         if len(rule_subsets[0]) <= self.leaf_threshold:
@@ -70,9 +72,9 @@ class CutSplit(object):
                 else:
                     rule_subsets[2].append(rule)
             rule_subsets[0] = []
-        print(datetime.datetime.now(),
-              "merge big rules completed, start merge small rules:",
-              len(rule_subsets[3]))
+        #print(datetime.datetime.now(),
+        #      "merge big rules completed, start merge small rules:",
+        #      len(rule_subsets[3]))
 
         # add subset 3 to subset 1 and subset 2
         smallrule_idx = 0
@@ -95,11 +97,11 @@ class CutSplit(object):
                     dst_bins[i] += 1
 
             smallrule_idx += 1
-            if smallrule_idx % 100 == 0:
-                print(datetime.datetime.now(), "merge small rules idx:",
-                      smallrule_idx, " in ", len(rule_subsets[3]))
+            #if smallrule_idx % 100 == 0:
+                #print(datetime.datetime.now(), "merge small rules idx:",
+                #      smallrule_idx, " in ", len(rule_subsets[3]))
 
-        print(datetime.datetime.now(), "merge small rules completed")
+        #print(datetime.datetime.now(), "merge small rules completed")
         # sort rule by priority
         for rule_subset in rule_subsets:
             rule_subset.sort(key=lambda i: i.priority)
@@ -231,10 +233,10 @@ class CutSplit(object):
 
     def train(self):
         print(datetime.datetime.now(), "Algorithm CutSplit")
-
+        start = time.time() 
         rule_subsets = self.separate_rules(self.rules)
-        print(datetime.datetime.now(), "Separate rules completed")
-
+        #print(datetime.datetime.now(), "Separate rules completed")
+        end = time.time()
         result = {"memory_access": 0, "bytes_per_rule": 0, "num_node": 0}
         for i, rule_subset in enumerate(rule_subsets):
             if len(rule_subset) == 0:
@@ -250,6 +252,6 @@ class CutSplit(object):
             result["num_node"] += result_subset["num_node"]
         result["bytes_per_rule"] /= len(self.rules)
 
-        print("%s Result %d %f %d" %
+        print("%s Result %d %f %d %f" %
               (datetime.datetime.now(), result["memory_access"],
-               result["bytes_per_rule"], result["num_node"]))
+               result["bytes_per_rule"], result["num_node"], end - start))

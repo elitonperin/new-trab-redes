@@ -1,5 +1,7 @@
 import math, sys
 import datetime
+#usado para calcular o tempo de execucao de cada epoca
+import time
 
 from tree import *
 
@@ -125,7 +127,6 @@ class HyperCuts(object):
         return (cut_dimensions, cut_nums)
 
     def build_tree(self, rules):
-
         tree = Tree(
             rules,
             self.leaf_threshold,
@@ -150,27 +151,27 @@ class HyperCuts(object):
             if cut_num == []:
                 cut_dimension_hicuts, cut_num_hicuts = self.select_action_hicuts(
                     tree, node)
-                if cut_num_hicuts <= 1 and print_count < 100:
-                    print("hypercuts turn to hicuts cut_num <=1, node rules number:",\
-                        len(node.rules))
-                    print_count += 1
+                #if cut_num_hicuts <= 1 and print_count < 100:
+                    #print("hypercuts turn to hicuts cut_num <=1, node rules number:",\
+                    #   len(node.rules))
+                    #print_count += 1
                 tree.cut_current_node(cut_dimension_hicuts, cut_num_hicuts)
             else:
                 tree.cut_current_node_multi_dimension(cut_dimension, cut_num)
             node = tree.get_current_node()
             count += 1
-            if count % 10000 == 0:
-                print(datetime.datetime.now(), "Depth:", tree.get_depth(),
-                      "Remaining nodes:", len(tree.nodes_to_cut))
-        # return tree.compute_result()
-        tree.result["bytes_per_rule"] = tree.result["bytes_per_rule"] / len(
-            tree.rules)
-        return tree.result
+            #if count % 10000 == 0:
+                #print(datetime.datetime.now(), "Depth:", tree.get_depth(),
+                #      "Remaining nodes:", len(tree.nodes_to_cut))
+        return tree.compute_result()
+        #tree.result["bytes_per_rule"] = tree.result["bytes_per_rule"] / len(
+        #    tree.rules)
+        #return tree.result
 
     def train(self):
 
         print(datetime.datetime.now(), "Algorithm HyperCuts")
-
+        start = time.time() 
         # divide rules into two sets
         rules_wset = []
         rules_rset = []
@@ -184,6 +185,7 @@ class HyperCuts(object):
         # build a tree for each set
         result_wset = self.build_tree(rules_wset)
         result_rset = self.build_tree(rules_rset)
+        end = time.time()
         result = {}
         result[
             "memory_access"] = result_wset["memory_access"] + result_rset["memory_access"]
@@ -193,6 +195,6 @@ class HyperCuts(object):
             result_rset["bytes_per_rule"] * len(rules_rset)) / \
             len(self.rules)
 
-        print("%s Result %d %d %d" %
+        print("%s Result %d %d %d %f" %
               (datetime.datetime.now(), result["memory_access"],
-               round(result["bytes_per_rule"]), result["num_node"]))
+               round(result["bytes_per_rule"]), result["num_node"], end - start))

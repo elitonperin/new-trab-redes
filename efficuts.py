@@ -1,5 +1,7 @@
 import math
 import datetime
+#usado para calcular o tempo de execucao de cada epoca
+import time
 
 from tree import *
 
@@ -230,8 +232,9 @@ class EffiCuts(object):
 
     def train(self):
         print(datetime.datetime.now(), "Algorithm EffiCuts")
+        start = time.time()
         rule_subsets = self.separate_rules(self.rules)
-
+        end = time.time()
         result = {"memory_access": 0, "bytes_per_rule": 0, "num_node": 0}
         for rule_subset in rule_subsets:
             result_subset = self.build_tree(rule_subset)
@@ -241,6 +244,6 @@ class EffiCuts(object):
             result["num_node"] += result_subset["num_node"]
         result["bytes_per_rule"] /= len(self.rules)
 
-        print("%s Result %d %d %d" %
+        print("%s Result %d %d %d %f" %
               (datetime.datetime.now(), result["memory_access"],
-               round(result["bytes_per_rule"]), result["num_node"]))
+               round(result["bytes_per_rule"]), result["num_node"], end - start))
