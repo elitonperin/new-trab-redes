@@ -19,7 +19,14 @@ python run_neurocuts.py --rules=acl1_100k,acl1_10k,acl1_1k,acl2_100k,acl2_10k,ac
 
 python run_neurocuts.py --rules=acl5_1k --dump-dir=/tmp/trees --num-workers=7 --gpu --fast -checkpoint-freq=1
 
-python run_baselines.py expr
+python run_baselines.py expr > experimentos.txt
+
+python run_neurocuts.py --rules=acl1_1k --dump-dir=/tmp/trees --num-workers=7 --gpu --fast --partition-mode=efficuts
+
+python run_baselines.py gen_result experimentos.txt 
+
+
+
 
 
 Configuraçao do Jupyter

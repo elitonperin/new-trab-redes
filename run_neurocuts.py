@@ -150,7 +150,7 @@ if __name__ == "__main__":
            "checkpoint_freq": 10,
             "config": {
                 "log_level": "WARN",
-                "num_gpus": 0.2 if args.gpu else 0,
+                "num_gpus": 0.6 if args.gpu else 0,
                 "num_workers": args.num_workers,
                 "sgd_minibatch_size": 100 if args.fast else 1000,
                 "sample_batch_size": 200 if args.fast else 5000,

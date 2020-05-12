@@ -219,7 +219,7 @@ def gen_result(file_name):
             rules = items[3]
         elif len(items) == 4 and items[2] == "Algorithm":
             algorithm = items[3]
-        elif len(items) == 6 and items[2] == "Result":
+        elif len(items) == 7 and items[2] == "Result":
             print("%s %s %s %s" % (rules, algorithm, items[3], items[4]))
         oneline = fin.readline()
     fin.close()
