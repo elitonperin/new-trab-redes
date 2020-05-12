@@ -22,6 +22,15 @@ python run_neurocuts.py --rules=acl5_1k --dump-dir=/tmp/trees --num-workers=7 --
 python run_baselines.py expr > experimentos.txt
 
 python run_neurocuts.py --rules=acl1_1k --dump-dir=/tmp/trees --num-workers=7 --gpu --fast --partition-mode=efficuts
+python run_neurocuts.py --rules=acl1_1k --dump-dir=/tmp/trees --num-workers=7 --gpu --fast --partition-mode=simple
+python run_neurocuts.py --rules=acl1_1k --dump-dir=/tmp/trees --num-workers=7 --gpu --fast --partition-mode=cutsplit
+
+
+python run_neurocuts.py --rules=acl2_1k --dump-dir=/tmp/trees --num-workers=7 --gpu --fast --partition-mode=simple
+
+python run_neurocuts.py --rules=acl1_10k --dump-dir=/tmp/trees --num-workers=7 --gpu --partition-mode=simple
+
+
 
 python run_baselines.py gen_result experimentos.txt 
 

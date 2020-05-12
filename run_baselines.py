@@ -41,12 +41,13 @@ def gen_rules():
 
 
 EXPRS = ["1k", "10k", "100k"]
+#EXPRS = ["1k"]
 
 
 def run_hicuts():
     for i in EXPRS:
         print(i)
-        rules = load_rules_from_file("classbench/acl1_%s" % i)
+        rules = load_rules_from_file("neurocuts-master/classbench/acl2_%s" % i)
         cuts = HiCuts(rules)
         cuts.train()
 
@@ -247,8 +248,8 @@ if __name__ == "__main__":
     elif sys.argv[1] == "run_file":
         run_file(sys.argv[2], sys.argv[3])
     elif sys.argv[1] == "expr":
-        run_all()
-        #run_hicuts()
+        #run_all()
+        run_hicuts()
         #run_hypercuts()
         #run_efficuts()
         #run_cutsplit()

@@ -68,8 +68,10 @@ class HiCuts(object):
         end = time.time()
         #print("Fim:", end)
         #print('tempo de execução:', end - start)
-        result["bytes_per_rule"] = result["bytes_per_rule"] / len(tree.rules)
+        #--Removi pq ja estava sendo feita a divisão qdo computadava o resultado
+        #result["bytes_per_rule"] = result["bytes_per_rule"] / len(tree.rules)
         #print("------mem_result-----")
+        #print ("%d", len(tree.rules) )
         print("%s Result %d %d %d %f" %
               (datetime.datetime.now(), result["memory_access"],
                round(result["bytes_per_rule"]), result["num_node"], end - start))
