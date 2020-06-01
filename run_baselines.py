@@ -40,7 +40,7 @@ def gen_rules():
             exe_cmd(cmd)
 
 
-EXPRS = ["1k", "10k", "100k"]
+EXPRS = ["1k", "10k"]
 #EXPRS = ["1k"]
 
 
@@ -248,8 +248,8 @@ if __name__ == "__main__":
     elif sys.argv[1] == "run_file":
         run_file(sys.argv[2], sys.argv[3])
     elif sys.argv[1] == "expr":
-        #run_all()
-        run_hicuts()
+        run_all()
+        #run_hicuts()
         #run_hypercuts()
         #run_efficuts()
         #run_cutsplit()
