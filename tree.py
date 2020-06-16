@@ -115,16 +115,36 @@ def retornaEB(endereco):
     if s4 == 0:
         if s4 == 0 and s3 == 0:
             if s4 == 0 and s3 == 0 and s2 == 0:
-                    s_inicial = st[0:8]
+                    s_inicial = reomoveEB(st[0:8])
             else:
-                s_inicial = st[0:16] 
+                s_inicial = st[0:8] + reomoveEB(st[8:16])
         else:
-           s_inicial = st[0:24] 
+           s_inicial = st[0:16] + reomoveEB(st[16:24])
     else:
-       s_inicial = st
+       s_inicial = st[0:24] + reomoveEB(st[24:32])
+    
+    #print ("Aqui 7", s_inicial)
     
     return converterb_d(s_inicial)
 
+def reomoveEB(sessao):
+    #print("Aqui 5",  sessao)
+    valor = 0
+    comparar = True
+    valoreb = ''
+    for caracter in sessao:
+        if comparar:
+            valor = int(caracter)
+            if valor == 1:
+                comparar = False
+                valoreb += caracter
+        else:
+            valoreb += caracter
+    
+    #print("Aqui 6-EB",  valoreb)
+    
+    return valoreb
+        
 
 def load_rules_from_file(file_name):
     rules = []
