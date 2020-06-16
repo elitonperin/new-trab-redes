@@ -78,7 +78,7 @@ def run_cutsplit():
 
 def run_all():
     # seed_files = ["ipc2_seed"]
-    j_list = ["1k", "10k", "100k"]
+    j_list = ["1k"]
     k_list = ["HiCuts", "HyperCuts", "EffiCuts", "CutSplit"]
     for i in seed_files:
         for j in j_list:
