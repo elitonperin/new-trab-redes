@@ -20,7 +20,7 @@ from ray.rllib.evaluation.sample_batch import SampleBatch
 from ray.rllib.evaluation.postprocessing import Postprocessing
 
 from neurocuts_env import NeuroCutsEnv
-from mask import PartitionMaskModel
+from maskper import PartitionMaskModel2
 
 parser = argparse.ArgumentParser()
 
@@ -136,7 +136,7 @@ if __name__ == "__main__":
             tree_gae_gamma=env_config["tree_gae_gamma"],
             tree_gae_lambda=env_config["tree_gae_lambda"]))
 
-    ModelCatalog.register_custom_model("mask", PartitionMaskModel)
+    ModelCatalog.register_custom_model("maskper", PartitionMaskModel2)
 
     run_experiments({
         "neurocuts_{}".format(args.partition_mode): {
@@ -158,7 +158,7 @@ if __name__ == "__main__":
                 "batch_mode": "complete_episodes",
                 "observation_filter": "NoFilter",
                 "model": {
-                    "custom_model": "mask",
+                    "custom_model": "maskper",
                     "fcnet_hiddens": [512, 512],
                 },
                 "vf_share_layers": False,

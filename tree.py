@@ -3,6 +3,7 @@ import random
 import numpy as np
 import re
 import sys
+from pythonds.basic.stack import Stack
 
 sys.setrecursionlimit(99999)
 SPLIT_CACHE = {}
@@ -67,6 +68,83 @@ class Rule:
                                         self.ranges[i * 2 + 1])
         return result
 
+def converterd_b(n):
+    binario = ""
+    while(True):
+        binario = binario + str(n%2)
+        n = n//2
+        if n == 0:
+            break
+    binario = binario[::-1]
+    binario = int(binario)
+    return binario
+
+def converterb_d(n):
+    decimal = 0
+    n = str(n)
+    n = n[::-1]
+    tam = len(n)
+    for i in range(tam):
+        if n[i] == "1":
+            decimal = decimal + 2**i
+    return decimal
+
+def divideBy2(decNumber):
+    remstack = Stack()
+
+    while decNumber > 0:
+        rem = decNumber % 2
+        remstack.push(rem)
+        decNumber = decNumber // 2
+
+    binString = ""
+    while not remstack.isEmpty():
+        binString = binString + str(remstack.pop())
+
+    return binString
+
+#Retorna os efetivos bytes (eb)
+def retornaEB(endereco):
+    st = divideBy2(endereco)
+    #print ("Aqui 4", st)
+    s1 = converterb_d(st[0:8])
+    s2 = converterb_d(st[8:16])
+    s3 = converterb_d(st[16:24])
+    s4 = converterb_d(st[24:32])
+    s_inicial = 0
+    if s4 == 0:
+        if s4 == 0 and s3 == 0:
+            if s4 == 0 and s3 == 0 and s2 == 0:
+                    s_inicial = reomoveEB(st[0:8])
+            else:
+                s_inicial = st[0:8] + reomoveEB(st[8:16])
+        else:
+           s_inicial = st[0:16] + reomoveEB(st[16:24])
+    else:
+       s_inicial = st[0:24] + reomoveEB(st[24:32])
+    
+    #print ("Aqui 7", s_inicial)
+    
+    return converterb_d(s_inicial)
+
+def reomoveEB(sessao):
+    #print("Aqui 5",  sessao)
+    valor = 0
+    comparar = True
+    valoreb = ''
+    for caracter in sessao:
+        if comparar:
+            valor = int(caracter)
+            if valor == 1:
+                comparar = False
+                valoreb += caracter
+        else:
+            valoreb += caracter
+    
+    #print("Aqui 6-EB",  valoreb)
+    
+    return valoreb
+        
 
 def load_rules_from_file(file_name):
     rules = []
@@ -88,12 +166,23 @@ def load_rules_from_file(file_name):
         (eval(rule_fmt.match(line).group(i)) for i in range(1, 17))
 
         sip0 = (sip0 << 24) | (sip1 << 16) | (sip2 << 8) | sip3
+        
         sip_begin = sip0 & (~((1 << (32 - sip_mask_len)) - 1))
         sip_end = sip0 | ((1 << (32 - sip_mask_len)) - 1)
-
+        
+        #print ("Sip - Endereco incial:", retornaEB(sip_begin))
+        #print ("Sip - Endereco final:", retornaEB(sip_end))
+        sip_begin = retornaEB(sip_begin)
+        sip_end = retornaEB(sip_end)
+        
         dip0 = (dip0 << 24) | (dip1 << 16) | (dip2 << 8) | dip3
         dip_begin = dip0 & (~((1 << (32 - dip_mask_len)) - 1))
         dip_end = dip0 | ((1 << (32 - dip_mask_len)) - 1)
+        
+        #print ("Dip - Endereco incial:", retornaEB(dip_begin))
+        #print ("Dip - Endereco final:", retornaEB(dip_end))
+        dip_begin = retornaEB(dip_begin)
+        dip_end = retornaEB(dip_begin)
 
         if proto_mask == 0xff:
             proto_begin = proto
@@ -101,7 +190,7 @@ def load_rules_from_file(file_name):
         else:
             proto_begin = 0
             proto_end = 0xff
-
+        #print ("Aqui", idx, sip_begin, sip_end + 1, dip_begin, dip_end + 1, sport_begin,sport_end + 1, dport_begin, dport_end + 1, proto_begin, proto_end + 1)
         rules.append(
             Rule(idx, [
                 sip_begin, sip_end + 1, dip_begin, dip_end + 1, sport_begin,
